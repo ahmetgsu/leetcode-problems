@@ -36,9 +36,22 @@ const romanToInt1 = s => {
     return total
 }
 
+const romanToInt2 = s => {
+    let total = 0
+    for (let i = 0; i < s.length; i++) {
+        if (romanNumbers[s[i]] < romanNumbers[s[i + 1]]) {
+            total -=  romanNumbers[s[i]]
+        } else {
+            total += romanNumbers[s[i]]
+        }
+    }
+    return total
+}
+
 s1 = "III"
 s2 = "LVIII"
 s3 = "MCMXCIV"
 s4 = "MMMCMXCIX"
 
-console.log(romanToInt1(s3))
+console.log(romanToInt1(s4))
+console.log(romanToInt2(s4))
