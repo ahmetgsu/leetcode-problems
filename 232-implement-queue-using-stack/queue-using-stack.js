@@ -16,37 +16,52 @@ Depending on your language, the stack may not be supported natively. You may sim
 
 class MyQueue {
     constructor() {
-        this.stack = []
+        this.inputStack = []
+        this.outputStack = []
     }
     peek() {
-        return this.stack[0]
+        if (this.outputStack.length === 0) {
+            while (this.inputStack.length > 0) {
+                this.outputStack.push(this.inputStack.pop());
+            }
+        }
+        return this.outputStack[this.outputStack.length - 1];
     }
 
     push(value) {
-        this.stack.push(value)
+        this.inputStack.push(value)
         return this
     }
 
     pop() {
-        if (this.stack.length === 0) {
-            return null
+        if (this.outputStack.length === 0) {
+            while (this.inputStack.length > 0) {
+                this.outputStack.push(this.inputStack.pop())
+            }
         }
-        const removedItem = this.stack.shift()
-        console.log("removedItem", removedItem)
-        return removedItem
+        return this.outputStack.pop()
     }
 
     empty() {
-        return this.stack.length === 0
+        return this.inputStack.length === 0 && this.outputStack.length === 0;
     }
-
 };
 var obj = new MyQueue()
-console.log(obj.push(2))
-console.log(obj.push(3))
-console.log(obj.pop())
+console.log("obj.push(2)", obj.push(2))
+console.log("obj.push(3)", obj.push(3))
+console.log("obj.pop()", obj.pop())
+console.log(obj.printStacks())
 console.log(obj.empty())
-console.log(obj.pop())
+console.log("obj.push(3)", obj.push(4))
+console.log("obj.push(3)", obj.push(5))
+console.log("obj.push(3)", obj.push(6))
+console.log(obj.printStacks())
+console.log("obj.pop()", obj.pop())
+console.log(obj.printStacks())
+console.log("obj.pop()", obj.pop())
+console.log(obj.printStacks())
+console.log("obj.pop()", obj.pop())
+console.log(obj.printStacks())
 console.log(obj.empty())
 
 /**
